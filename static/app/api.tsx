@@ -11,6 +11,8 @@ import {
   SUDO_REQUIRED,
   SUPERUSER_REQUIRED,
 } from 'sentry/constants/apiErrorCodes';
+import ConfigStore from 'sentry/stores/configStore';
+import {OrganizationSummary} from 'sentry/types';
 import {metric} from 'sentry/utils/analytics';
 import getCsrfToken from 'sentry/utils/getCsrfToken';
 import {uniqueId} from 'sentry/utils/guid';
@@ -591,4 +593,15 @@ export class Client {
       })
     );
   }
+}
+
+export function generateOrganizationUrl(organization: OrganizationSummary) {
+  const sentryUrl = ConfigStore.get('sentryUrl');
+  const organizationUrl = new URL('/', sentryUrl);
+
+  // TODO: validate organization.slug as a subdomain?
+  organizationUrl.hostname = `${organization.slug}.${organizationUrl.hostname}`;
+
+  // Remove any and all trailing slashes
+  return organizationUrl.toString().replace(/\/*$/, '');
 }
