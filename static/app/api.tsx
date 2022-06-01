@@ -605,3 +605,25 @@ export function generateOrganizationUrl(organization: OrganizationSummary) {
   // Remove any and all trailing slashes
   return organizationUrl.toString().replace(/\/*$/, '');
 }
+
+type APIRouteType = 'issue-list';
+
+type APIRouterRendererArgs = {
+  organization: OrganizationSummary;
+  organizationUrl: string;
+  sentryUrl: string;
+};
+type APIRouterRenderer = (args: APIRouterRendererArgs) => string;
+
+const routeRenderMap: Record<APIRouteType, APIRouterRenderer> = {
+  'issue-list': function (args) {
+    return args.organizationUrl;
+  },
+};
+
+export function resolveUrl(routeType: APIRouteType, organization: OrganizationSummary) {
+  const routeRender = routeRenderMap[routeType];
+  const organizationUrl = generateOrganizationUrl(organization);
+  const sentryUrl = ConfigStore.get('sentryUrl');
+  return routeRender({organization, organizationUrl, sentryUrl});
+}
