@@ -242,6 +242,11 @@ type ClientOptions = {
    * This is prefixed before baseUrl.
    */
   organizationUrl?: string;
+  /**
+   * The URL prefix to be used for making requests for non-organization endpoints.
+   * This is prefixed before baseUrl.
+   */
+  sentryUrl?: string;
 };
 
 type HandleRequestErrorOptions = {
