@@ -13,6 +13,7 @@ export type OrganizationSummary = {
   avatar: Avatar;
   dateCreated: string;
   features: string[];
+  hasCustomerDomain: boolean;
   id: string;
   isEarlyAdopter: boolean;
   name: string;
