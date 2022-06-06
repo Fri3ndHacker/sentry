@@ -314,7 +314,7 @@ jobs:
     # workflows that generate artifacts succeed
     needs: [acceptance, frontend, chartcuterie]
     name: triggers visual snapshot
-    runs-on: ubuntu-20.04
+    runs-on: macos-11
     timeout-minutes: 20
     steps:
       # If any jobs we depend on fail, we will fail since this checks triggers Visual Snapshots which is a required check
